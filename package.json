@@ -1,6 +1,6 @@
 {
   "name": "piksel-ui",
-  "private": true,
+  "private": false,
   "license": "MIT",
   "scripts": {
     "build": "turbo build --filter=./packages/pui-*",
@@ -8,6 +8,7 @@
     "clean": "turbo clean --filter=./packages/pui-* && rm -rf node_modules",
     "lint": "turbo lint --filter=./packages/pui-*",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "typecheck": "turbo typecheck --filter=./packages/pui-*",
     "status": "changeset status",
     "changeset": "changeset",
     "version-packages": "changeset version",
@@ -23,6 +24,9 @@
     "node": ">=18"
   },
   "packageManager": "yarn@1.22.21",
+  "publishConfig": {
+    "access": "public"
+  },
   "workspaces": [
     "packages/*"
   ]

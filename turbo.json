@@ -4,8 +4,7 @@
   "pipeline": {
     "build": {
       "outputs": ["dist/**"],
-      "dependsOn": [],
-      "inputs": ["src/**"]
+      "dependsOn": []
     },
     "lint": {
       "dependsOn": ["^lint"]
@@ -13,6 +12,12 @@
     "dev": {
       "cache": false,
       "persistent": true
+    },
+    "typecheck": {
+      "cache": false
+    },
+    "clean": {
+      "cache": false
     }
   }
 }

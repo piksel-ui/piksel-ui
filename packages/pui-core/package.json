@@ -1,7 +1,7 @@
 {
   "name": "@piksel-ui/core",
-  "version": "0.0.0",
-  "private": true,
+  "version": "0.0.1",
+  "private": false,
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
@@ -9,7 +9,8 @@
     "build": "tsup src/index.ts --format cjs,esm --dts --minify",
     "dev": "yarn build -- --watch",
     "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist",
-    "lint": "eslint src --ext .ts,.tsx"
+    "lint": "eslint src --ext .ts,.tsx",
+    "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
     "@repo/eslint-config": "*",
@@ -26,5 +27,8 @@
   },
   "dependencies": {
     "@changesets/cli": "^2.27.1"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

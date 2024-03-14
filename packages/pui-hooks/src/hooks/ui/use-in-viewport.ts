@@ -9,7 +9,7 @@ export const useInViewport = <T extends HTMLElement = any>() => {
       return null;
     }
     return new IntersectionObserver(([entry]) =>
-      setInViewport(entry.isIntersecting)
+      setInViewport(entry?.isIntersecting ?? false)
     );
   }, []);
 
