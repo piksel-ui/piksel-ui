@@ -1,10 +1,10 @@
 import React from "react";
 import { DocsThemeConfig } from "nextra-theme-docs";
+import { Footer } from "./components/Footer";
 
 const logo = (size: number = 0) => (
   <span className="inline-flex items-center gap-2">
     <svg
-      width="100%"
       height={size}
       viewBox="0 0 450 650"
       fill="none"
@@ -24,17 +24,26 @@ const logo = (size: number = 0) => (
 );
 
 const config: DocsThemeConfig = {
-  logo: () => logo(36),
+  logo: () => logo(32),
   project: {
-    // link: "https://piksel.design",
-    icon: () => logo(24),
+    link: "https://github.com/piksel-ui/piksel-ui",
   },
   chat: {
     // link: "https://discord.com",
   },
   docsRepositoryBase: "https://github.com/shuding/nextra-docs-template",
   footer: {
-    text: "Piksel UI",
+    component: Footer,
+  },
+  useNextSeoProps() {
+    return {
+      titleTemplate: "%s — Piksel UI",
+      noindex: true,
+      themeColor: "#5551DC",
+      defaultTitle: "Piksel UI",
+      description:
+        "Piksel UI is a modern design system for React.js and Tailwind CSS. It is designed to be a flexible and scalable foundation for building web applications.",
+    };
   },
 };
 

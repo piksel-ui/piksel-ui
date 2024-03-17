@@ -1,3 +1,5 @@
 {
-  "button": "Button"
+  "button": {
+    "title": "Button"
+  }
 }
