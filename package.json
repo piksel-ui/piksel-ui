@@ -1,22 +1,22 @@
 {
   "name": "piksel-ui",
-  "private": false,
+  "private": true,
   "license": "MIT",
   "scripts": {
-    "build": "turbo build --filter=./packages/pui-*",
-    "dev": "turbo dev --filter=./packages/pui-*",
-    "clean": "turbo clean --filter=./packages/pui-* && rm -rf node_modules",
-    "lint": "turbo lint --filter=./packages/pui-*",
+    "build": "turbo build --filter=./packages/pui-* --filter=docs",
+    "dev": "turbo dev --filter=./packages/pui-* --filter=docs",
+    "clean": "turbo clean --filter=./packages/pui* --filter=docs && rm -rf node_modules",
+    "typecheck": "turbo typecheck --filter=./packages/pui-* --filter=docs",
+    "lint": "turbo lint --filter=./packages/pui-* --filter=docs",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "typecheck": "turbo typecheck --filter=./packages/pui-*",
     "status": "changeset status",
     "changeset": "changeset",
     "version-packages": "changeset version",
     "release": "turbo build --filter=./packages/pui-* && changeset publish"
   },
   "devDependencies": {
-    "@repo/eslint-config": "*",
-    "@repo/typescript-config": "*",
+    "@piksel-ui/eslint-config": "*",
+    "@piksel-ui/typescript-config": "*",
     "prettier": "^3.2.5",
     "turbo": "latest"
   },
@@ -28,6 +28,8 @@
     "access": "public"
   },
   "workspaces": [
+    "apps/*",
     "packages/*"
-  ]
+  ],
+  "dependencies": {}
 }

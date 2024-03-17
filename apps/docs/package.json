@@ -1,0 +1,40 @@
+{
+  "name": "@piksel-ui/docs",
+  "version": "0.0.1",
+  "description": "Piksel UI Documentation",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf .next",
+    "start": "next start",
+    "typecheck": "tsc --noEmit"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shuding/nextra-docs-template.git"
+  },
+  "author": "Oğuzhan Yılmaz <me@oguzhan.dev>",
+  "license": "MIT",
+  "bugs": {},
+  "homepage": "https://piksel-ui.com",
+  "dependencies": {
+    "@piksel-ui/core": "*",
+    "@piksel-ui/hooks": "*",
+    "clsx": "^2.1.0",
+    "next": "^13.0.6",
+    "nextra": "latest",
+    "nextra-theme-docs": "latest",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-icons": "^5.0.1",
+    "tailwind-merge": "^2.2.1"
+  },
+  "devDependencies": {
+    "@types/node": "18.11.10",
+    "@types/react": "^18.2.63",
+    "autoprefixer": "^10.4.18",
+    "postcss": "^8.4.35",
+    "tailwindcss": "^3.4.1",
+    "typescript": "^4.9.3"
+  }
+}

@@ -2,6 +2,7 @@
   "name": "@piksel-ui/hooks",
   "version": "0.0.1",
   "private": false,
+  "license": "MIT",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
@@ -13,8 +14,8 @@
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
-    "@repo/eslint-config": "*",
-    "@repo/typescript-config": "*",
+    "@piksel-ui/eslint-config": "*",
+    "@piksel-ui/typescript-config": "*",
     "@turbo/gen": "^1.12.4",
     "@types/eslint": "^8.56.5",
     "@types/node": "^20.11.24",
@@ -24,9 +25,7 @@
     "tsup": "^8.0.2",
     "typescript": "^5.3.3"
   },
-  "dependencies": {
-    "@changesets/cli": "^2.27.1"
-  },
+  "dependencies": {},
   "peerDependencies": {
     "react": "^18.2.0"
   },

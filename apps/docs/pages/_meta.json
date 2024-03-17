@@ -1,0 +1,15 @@
+{
+  "index": "Introduction",
+  "installation": "Installation",
+  "about": {
+    "title": "About",
+    "type": "page"
+  },
+  "contact": {
+    "title": "Contact ↗",
+    "type": "page",
+    "href": "https://twitter.com/owuzan_",
+    "newWindow": true
+  },
+  "components": "Components"
+}

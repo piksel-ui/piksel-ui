@@ -1,0 +1,727 @@
+import { Preview } from "../../components/preview";
+import { Button } from "../../pui";
+import { Link } from "../../components/Link";
+import { CheckText } from "../../components/CheckText";
+import { Collapse } from "../../components/Collapse";
+import { FaReact } from "react-icons/fa";
+import NextLink from "next/link";
+
+# Button
+
+The Button component is used to trigger an action or event, such as submitting a form, opening a dialog, canceling an action, or performing a delete operation.
+
+<Preview center children={<Button children="Button" />} />
+
+```tsx showLineNumbers copy
+export const Example = () => {
+  return <Button>Button</Button>;
+};
+```
+
+## Installation
+
+<CheckText />
+
+### Source code
+
+Copy the following source code and add it to your project.
+
+<Collapse>
+
+```tsx filename="components/p-ui/button/index.tsx" showLineNumbers copy
+import { PikselComponentProps, forwardRef, cs } from "@piksel-ui/core";
+import React, { ElementType, ForwardedRef } from "react";
+
+export type ButtonProps<T extends ElementType> = {
+  as?: T;
+  variant?: "solid" | "light" | "outline" | "ghost" | "link";
+  color?:
+    | "blue"
+    | "red"
+    | "violet"
+    | "green"
+    | "yellow"
+    | "zinc"
+    | "white"
+    | "black";
+  size?: "xs" | "sm" | "md" | "lg" | "xl";
+  radius?: "none" | "sm" | "md" | "lg" | "full";
+  square?: boolean;
+  truncate?: boolean;
+  fullWidth?: boolean;
+  loading?: boolean;
+  children?: React.ReactNode;
+};
+
+export const buttonStyle = cs({
+  base: [
+    "inline-flex items-center justify-center font-medium outline-0 transition cursor-pointer select-none underline-none flex-shrink-0",
+    "hover:bg-opacity-90",
+    "active:bg-opacity-100",
+    "focus-visible:ring-2 focus-visible:ring-offset-1 focus-visible:ring-offset-transparent",
+    "disabled:opacity-75 disabled:cursor-not-allowed",
+  ],
+  variants: {
+    variant: {
+      solid: "",
+      light: "hover:bg-opacity-50",
+      outline: "outline-1 -outline-offset-1",
+      ghost: "active:bg-opacity-50",
+      link: "underline-offset-4 hover:underline",
+    },
+    color: {
+      blue: "focus-visible:ring-blue-500",
+      red: "focus-visible:ring-red-500",
+      violet: "focus-visible:ring-violet-500",
+      green: "focus-visible:ring-green-500",
+      yellow: "focus-visible:ring-yellow-500",
+      zinc: "focus-visible:ring-zinc-500",
+      white: "focus-visible:ring-zinc-50",
+      black: "focus-visible:ring-zinc-950",
+    },
+    size: {
+      xs: "px-2 text-xs h-8 gap-0.5",
+      sm: "px-3 text-sm h-9 gap-1",
+      md: "px-4 text-base h-10 gap-1.5",
+      lg: "px-5 text-lg h-11 gap-2",
+      xl: "px-5 text-xl h-12 gap-2.5",
+    },
+    radius: {
+      none: "rounded-none",
+      sm: "rounded-sm",
+      md: "rounded-md",
+      lg: "rounded-lg",
+      full: "rounded-full",
+    },
+    square: {
+      true: "aspect-square px-0 truncate",
+    },
+    truncate: {
+      true: "truncate",
+    },
+    fullWidth: {
+      true: "flex w-full",
+    },
+    loading: {
+      true: "cursor-not-allowed",
+    },
+  },
+  compoundVariants: [
+    /* -------------------------------------------------------------------------- */
+    /*                                Solid variant                               */
+    /* -------------------------------------------------------------------------- */
+    {
+      variant: "solid",
+      color: "blue",
+      className: "bg-blue-500 text-white",
+    },
+    {
+      variant: "solid",
+      color: "red",
+      className: "bg-red-500 text-white",
+    },
+    {
+      variant: "solid",
+      color: "violet",
+      className: "bg-violet-500 text-white",
+    },
+    {
+      variant: "solid",
+      color: "green",
+      className: "bg-green-500 text-white",
+    },
+    {
+      variant: "solid",
+      color: "yellow",
+      className: "bg-yellow-500 text-black",
+    },
+    {
+      variant: "solid",
+      color: "zinc",
+      className: "bg-zinc-500 text-white",
+    },
+    {
+      variant: "solid",
+      color: "white",
+      className: "bg-zinc-50 text-zinc-950",
+    },
+    {
+      variant: "solid",
+      color: "black",
+      className: "bg-zinc-950 text-white",
+    },
+    /* -------------------------------------------------------------------------- */
+    /*                                Light variant                               */
+    /* -------------------------------------------------------------------------- */
+    {
+      variant: "light",
+      color: "blue",
+      className: "bg-blue-100 text-blue-600",
+    },
+    {
+      variant: "light",
+      color: "red",
+      className: "bg-red-100 text-red-600",
+    },
+    {
+      variant: "light",
+      color: "violet",
+      className: "bg-violet-100 text-violet-600",
+    },
+    {
+      variant: "light",
+      color: "green",
+      className: "bg-green-100 text-green-600",
+    },
+    {
+      variant: "light",
+      color: "yellow",
+      className: "bg-yellow-100 text-yellow-600",
+    },
+    {
+      variant: "light",
+      color: "zinc",
+      className: "bg-zinc-100 text-zinc-600",
+    },
+    {
+      variant: "light",
+      color: "white",
+      className: "bg-white text-zinc-950",
+    },
+    {
+      variant: "light",
+      color: "black",
+      className: "bg-zinc-950 hover:bg-opacity-90 text-white",
+    },
+    /* -------------------------------------------------------------------------- */
+    /*                               Outline variant                              */
+    /* -------------------------------------------------------------------------- */
+    {
+      variant: "outline",
+      color: "blue",
+      className:
+        "text-blue-500 outline-blue-500 hover:bg-blue-500 hover:text-white",
+    },
+    {
+      variant: "outline",
+      color: "red",
+      className:
+        "text-red-500 outline-red-500 hover:bg-red-500 hover:text-white",
+    },
+    {
+      variant: "outline",
+      color: "violet",
+      className:
+        "text-violet-500 outline-violet-500 hover:bg-violet-500 hover:text-white",
+    },
+    {
+      variant: "outline",
+      color: "green",
+      className:
+        "text-green-500 outline-green-500 hover:bg-green-500 hover:text-white",
+    },
+    {
+      variant: "outline",
+      color: "yellow",
+      className:
+        "text-yellow-500 outline-yellow-500 hover:bg-yellow-500 hover:text-black",
+    },
+    {
+      variant: "outline",
+      color: "zinc",
+      className:
+        "text-zinc-500 outline-zinc-500 hover:bg-zinc-500 hover:text-white",
+    },
+    {
+      variant: "outline",
+      color: "white",
+      className:
+        "text-zinc-500 outline-zinc-500 hover:bg-zinc-500 hover:text-white",
+    },
+    {
+      variant: "outline",
+      color: "black",
+      className:
+        "text-zinc-950 outline-zinc-950 hover:bg-zinc-950 hover:text-white",
+    },
+    /* -------------------------------------------------------------------------- */
+    /*                                Ghost variant                               */
+    /* -------------------------------------------------------------------------- */
+    {
+      variant: "ghost",
+      color: "blue",
+      className: "text-blue-500 hover:bg-blue-50",
+    },
+    {
+      variant: "ghost",
+      color: "red",
+      className: "text-red-500 hover:bg-red-50",
+    },
+    {
+      variant: "ghost",
+      color: "violet",
+      className: "text-violet-500 hover:bg-violet-50",
+    },
+    {
+      variant: "ghost",
+      color: "green",
+      className: "text-green-500 hover:bg-green-50",
+    },
+    {
+      variant: "ghost",
+      color: "yellow",
+      className: "text-yellow-500 hover:bg-yellow-50",
+    },
+    {
+      variant: "ghost",
+      color: "zinc",
+      className: "text-zinc-500 hover:bg-zinc-50",
+    },
+    {
+      variant: "ghost",
+      color: "white",
+      className: "text-zinc-950",
+    },
+    {
+      variant: "ghost",
+      color: "black",
+      className: "text-zinc-950 hover:bg-zinc-950 hover:text-zinc-50",
+    },
+    /* -------------------------------------------------------------------------- */
+    /*                                Link variant                                */
+    /* -------------------------------------------------------------------------- */
+    {
+      variant: "link",
+      color: "blue",
+      className: "text-blue-500",
+    },
+    {
+      variant: "link",
+      color: "red",
+      className: "text-red-500",
+    },
+    {
+      variant: "link",
+      color: "violet",
+      className: "text-violet-500",
+    },
+    {
+      variant: "link",
+      color: "green",
+      className: "text-green-500",
+    },
+    {
+      variant: "link",
+      color: "yellow",
+      className: "text-yellow-500",
+    },
+    {
+      variant: "link",
+      color: "zinc",
+      className: "text-zinc-500",
+    },
+    {
+      variant: "link",
+      color: "white",
+      className: "text-zinc-100",
+    },
+    {
+      variant: "link",
+      color: "black",
+      className: "text-zinc-950",
+    },
+  ],
+  defaultVariants: {
+    variant: "solid",
+    color: "blue",
+    size: "md",
+    radius: "md",
+  },
+});
+
+export const Button = forwardRef(
+  <T extends ElementType = "button">(
+    props: PikselComponentProps<T, ButtonProps<T>>,
+    ref: ForwardedRef<any>
+  ) => {
+    const {
+      as: Component = "button",
+      variant = "solid",
+      color = "blue",
+      size = "md",
+      radius = "md",
+      square = false,
+      truncate = false,
+      fullWidth = false,
+      loading = false,
+      className,
+      children,
+      ...rest
+    } = props;
+
+    return (
+      <Component
+        className={buttonStyle({
+          variant,
+          color,
+          size,
+          radius,
+          square,
+          truncate,
+          fullWidth,
+          loading,
+          className,
+        })}
+        {...rest}
+        ref={ref}
+      >
+        <span>{children}</span>
+      </Component>
+    );
+  }
+);
+```
+
+</Collapse>
+
+## API
+
+The Button component has the following props.
+
+| Name      | Type                                                                                 | Default  | Description                               |
+| --------- | ------------------------------------------------------------------------------------ | -------- | ----------------------------------------- |
+| as        | `React.ElementType`                                                                  | `button` | The component used for the root node.     |
+| variant   | `'solid' \| 'light' \| 'outline' \| 'ghost' \| 'link'`                               | `solid`  | The variant of the button.                |
+| color     | `'blue' \| 'red' \| 'violet' \| 'green' \| 'yellow' \| 'zinc' \| 'white' \| 'black'` | `blue`   | The color of the button.                  |
+| size      | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'`                                               | `md`     | The size of the button.                   |
+| radius    | `'none' \| 'sm' \| 'md' \| 'lg' \| 'xl' \| 'full'`                                   | `md`     | The border radius of the button.          |
+| square    | `boolean`                                                                            | `false`  | Whether the button is square.             |
+| truncate  | `boolean`                                                                            | `false`  | Whether the button text is truncated.     |
+| fullWidth | `boolean`                                                                            | `false`  | Whether the button is full width.         |
+| loading   | `boolean`                                                                            | `false`  | Whether the button is in a loading state. |
+| children  | `React.ReactNode`                                                                    | -        | The content of the button.                |
+
+## Examples
+
+### Solid button
+
+The solid button is used to indicate the primary action in a view.
+
+<Preview center>
+  <Button variant="solid" children="Solid" />
+</Preview>
+
+```tsx showLineNumbers copy
+export const Example = () => {
+  return <Button variant="solid">Solid</Button>;
+};
+```
+
+### Light button
+
+The light button is used to indicate a secondary action in a view.
+
+<Preview center>
+  <Button variant="light" children="Light" />
+</Preview>
+  
+  ```tsx showLineNumbers copy
+  export const Example = () => {
+    return <Button variant="light">Light</Button>
+  };
+  ```
+
+### Outline button
+
+The outline button is used to indicate a tertiary action in a view.
+
+<Preview center>
+  <Button variant="outline" children="Outline" />
+</Preview>
+
+```tsx showLineNumbers copy
+export const Example = () => {
+  return <Button variant="outline">Outline</Button>;
+};
+```
+
+### Ghost button
+
+The ghost button is used to indicate a neutral action in a view.
+
+<Preview center>
+  <Button variant="ghost" children="Ghost" />
+</Preview>
+
+```tsx showLineNumbers copy
+export const Example = () => {
+  return <Button variant="ghost">Ghost</Button>;
+};
+```
+
+### Link button
+
+The link button is used to indicate a link in a view.
+
+<Preview center>
+  <Button variant="link" children="Link" />
+</Preview>
+  
+```tsx showLineNumbers copy
+export const Example = () => {
+  return <Button variant="link">Link</Button>;
+};
+```
+
+### Button colors
+
+The color of the button can be changed using the `color` prop.
+
+<Preview>
+  <div className="grid grid-cols-4 gap-4">
+    <div>
+      <Button color="blue" children="Blue" />
+    </div>
+    <div>
+      <Button color="red" children="Red" />
+    </div>
+    <div>
+      <Button color="violet" children="Violet" />
+    </div>
+    <div>
+      <Button color="green" children="Green" />
+    </div>
+    <div>
+      <Button color="yellow" children="Yellow" />
+    </div>
+    <div>
+      <Button color="zinc" children="Zinc" />
+    </div>
+    <div>
+      <Button color="white" children="White" />
+    </div>
+    <div>
+      <Button color="black" children="Black" />
+    </div>
+  </div>
+</Preview>
+
+```tsx showLineNumbers copy
+export const Example = () => {
+  return (
+    <>
+      <Button color="blue">Blue</Button>
+      <Button color="red">Red</Button>
+      <Button color="violet">Violet</Button>
+      <Button color="green">Green</Button>
+      <Button color="yellow">Yellow</Button>
+      <Button color="zinc">Zinc</Button>
+      <Button color="white">White</Button>
+      <Button color="black">Black</Button>
+    </>
+  );
+};
+```
+
+### Button sizes
+
+The size of the button can be changed using the `size` prop.
+
+<Preview>
+  <div className="grid grid-cols-4 gap-4">
+    <div>
+      <Button size="xs" children="Extra small" />
+    </div>
+    <div>
+      <Button size="sm" children="Small" />
+    </div>
+    <div>
+      <Button size="md" children="Medium" />
+    </div>
+    <div>
+      <Button size="lg" children="Large" />
+    </div>
+    <div>
+      <Button size="xl" children="Extra large" />
+    </div>
+  </div>
+</Preview>
+  
+```tsx showLineNumbers copy
+export const Example = () => {
+  return (
+    <>
+      <Button size="xs">Extra small</Button>
+      <Button size="sm">Small</Button>
+      <Button size="md">Medium</Button>
+      <Button size="lg">Large</Button>
+      <Button size="xl">Extra large</Button>
+    </>
+  );
+};
+```
+
+### Button radius
+
+The border radius of the button can be changed using the `radius` prop.
+
+<Preview>
+  <div className="grid grid-cols-4 gap-4">
+    <div>
+      <Button radius="none" children="None" />
+    </div>
+    <div>
+      <Button radius="sm" children="Small" />
+    </div>
+    <div>
+      <Button radius="md" children="Medium" />
+    </div>
+    <div>
+      <Button radius="lg" children="Large" />
+    </div>
+    <div>
+      <Button radius="xl" children="XLarge" />
+    </div>
+    <div>
+      <Button radius="full" children="Full" />
+    </div>
+  </div>
+</Preview>
+  
+```tsx showLineNumbers copy
+export const Example = () => {
+  return (
+    <>
+      <Button radius="none">None</Button>
+      <Button radius="sm">Small</Button>
+      <Button radius="md">Medium</Button>
+      <Button radius="lg">Large</Button>
+      <Button radius="xl">XLarge</Button>
+      <Button radius="full">Full</Button>
+    </>
+  );
+};
+```
+
+### Square button
+
+The `square` prop is used to make the button look square. It is generally used when an icon is placed inside the button.
+
+<Preview center>
+  <Button square>
+    <FaReact size={20} />
+  </Button>
+</Preview>
+  
+```tsx showLineNumbers copy
+export const Example = () => {
+  return (
+    <Button square>
+      <FaReact size={20} />
+    </Button>
+  );
+};
+```
+
+### Truncate button
+
+The `truncate` prop is used to truncate the text inside the button. It prevents text overflow in buttons with a fixed width.
+
+<Preview center>
+  <Button className="w-20" truncate children="Truncate text" />
+</Preview>
+
+```tsx showLineNumbers copy
+export const Example = () => {
+  return (
+    <Button className="w-20" truncate>
+      Truncate text
+    </Button>
+  );
+};
+```
+
+### Full width button
+
+The `fullWidth` prop is used to make the button full width.
+
+<Preview>
+  <div className="grid grid-cols-1 gap-4">
+    <div>
+      <Button fullWidth children="Full width" />
+    </div>
+    <div>
+      <Button children="Full width" />
+    </div>
+  </div>
+</Preview>
+  
+```tsx showLineNumbers copy
+export const Example = () => {
+  return (
+    <>
+      <Button fullWidth>Full width</Button>
+      <Button>Full width</Button>
+    </>
+  );
+};
+```
+
+### Loading button
+
+The `loading` prop is used to indicate that the button is in a loading state.
+In this case, the button cannot be clicked.
+
+<Preview center>
+  <Button loading children="Loading" />
+</Preview>
+
+```tsx showLineNumbers copy
+export const Example = () => {
+  return <Button loading>Loading</Button>;
+};
+```
+
+### Custom component
+
+You can change the root element of the button with the `as` prop.
+The Button component will now be rendered as an anchor element and will receive the `href` and `target` props required for the anchor element.
+This applies to all components and props.
+
+**Anchor**
+
+<Preview center>
+  <Button as="a" href="#" children="Link" target="_blank" />
+</Preview>
+
+```tsx showLineNumbers copy
+export const Example = () => {
+  return (
+    <Button as="a" href="#" target="_blank">
+      Link
+    </Button>
+  );
+};
+```
+
+**Next Link**
+
+You can use any component you want, not just `ElementType`.
+For example, when using with Next.js, you can use the `Link` component.
+It supports all props from the component you write here.
+
+<Preview center>
+  <Button as={Link} href="#" children="Link" target="_blank" />
+</Preview>
+
+```tsx showLineNumbers copy
+import Link from "next/link";
+
+export const Example = () => {
+  return (
+    <Button as={Link} href="#" target="_blank">
+      Link
+    </Button>
+  );
+};
+```
