@@ -29,6 +29,9 @@
     "tsup": "^8.0.2",
     "typescript": "^5.3.3"
   },
+  "peerDependencies": {
+    "@piksel-ui/hooks": "*"
+  },
   "publishConfig": {
     "access": "public"
   }
