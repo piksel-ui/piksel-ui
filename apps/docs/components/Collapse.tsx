@@ -29,12 +29,13 @@ export const Collapse: FC<CollapseProps> = (props) => {
     >
       {children}
       {scrollable && (
-        <div className="absolute inset-x-0 bottom-0 text-center bg-gradient-to-b from-transparent to-white">
+        <div className="absolute inset-x-0 bottom-0 text-center bg-gradient-to-b from-gray-100/0 to-white dark:to-[#111111] pointer-events-none">
           <Button
             color="blue"
-            variant="light"
+            variant="solid"
             size="sm"
             onClick={() => toggleExpanded()}
+            className="pointer-events-auto"
           >
             {expanded ? "Collapse code" : "Expand code"}
           </Button>
