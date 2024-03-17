@@ -17,7 +17,7 @@ const logo = (size: number = 0) => (
         fill="#5551DC"
       />
     </svg>
-    <span className="font-semibold flex-shrink-0 text-xl text-zinc-900">
+    <span className="font-semibold flex-shrink-0 text-xl text-zinc-900 dark:text-zinc-100">
       Piksel UI
     </span>
   </span>
