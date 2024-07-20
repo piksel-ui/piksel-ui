@@ -1,0 +1,427 @@
+---
+title: Button
+description: The Button component is used to trigger an action or event, such as submitting a form, opening a dialog, canceling an action, or performing a delete operation.
+---
+
+import { Preview } from "components/Preview";
+import { Button } from "pui";
+import { Link } from "components/Link";
+import { CheckText } from "components/CheckText";
+import { Collapse } from "components/Collapse";
+import { FaReact } from "react-icons/fa";
+import NextLink from "next/link";
+import { TypeTable } from "fumadocs-ui/components/type-table";
+
+The Button component is used to trigger an action or event, such as submitting a form, opening a dialog, canceling an action, or performing a delete operation.
+
+<Preview center children={<Button children="Button" />} />
+
+```tsx
+export const Example = () => {
+  return <Button>Button</Button>;
+};
+```
+
+## Installation
+
+<CheckText />
+
+## API
+
+The Button component has the following props.
+
+<TypeTable
+  type={{
+    asChild: {
+      description: "The component used for the root node.",
+      type: "boolean",
+      default: "false",
+    },
+    variant: {
+      description: "The variant of the button.",
+      type: "filled | light | outline | ghost | link",
+      default: "filled",
+    },
+    color: {
+      description: "The color of the button.",
+      type: "blue | red | violet | green | yellow | zinc | white | black",
+      default: "blue",
+    },
+    size: {
+      description: "The size of the button.",
+      type: "xs | sm | md | lg | xl",
+      default: "md",
+    },
+    radius: {
+      description: "The border radius of the button.",
+      type: "none | sm | md | lg | xl | full",
+      default: "md",
+    },
+    square: {
+      description: "Whether the button is square.",
+      type: "boolean",
+      default: "false",
+    },
+    truncate: {
+      description: "Whether the button text is truncated.",
+      type: "boolean",
+      default: "false",
+    },
+    fullWidth: {
+      description: "Whether the button is full width.",
+      type: "boolean",
+      default: "false",
+    },
+    loading: {
+      description: "Whether the button is in a loading state.",
+      type: "boolean",
+      default: "false",
+    },
+    children: {
+      description: "The content of the button.",
+      type: "React.ReactNode",
+      default: "",
+    },
+  }}
+/>
+
+## Examples
+
+### Filled button
+
+The filled button is used to indicate the primary action in a view.
+
+<Preview center>
+  <Button variant="filled" children="Filled" />
+</Preview>
+
+```tsx
+export const Example = () => {
+  return <Button variant="filled">Filled</Button>;
+};
+```
+
+### Soft button
+
+The soft button is used to indicate a secondary action in a view.
+
+<Preview center>
+  <Button variant="soft" children="Soft" />
+</Preview>
+  
+  ```tsx 
+  export const Example = () => {
+    return <Button variant="soft">Soft</Button>
+  };
+  ```
+
+### Outline button
+
+The outline button is used to indicate a tertiary action in a view.
+
+<Preview center>
+  <Button variant="outline" children="Outline" />
+</Preview>
+
+```tsx
+export const Example = () => {
+  return <Button variant="outline">Outline</Button>;
+};
+```
+
+### Ghost button
+
+The ghost button is used to indicate a neutral action in a view.
+
+<Preview center>
+  <Button variant="ghost" children="Ghost" />
+</Preview>
+
+```tsx
+export const Example = () => {
+  return <Button variant="ghost">Ghost</Button>;
+};
+```
+
+### Link button
+
+The link button is used to indicate a link in a view.
+
+<Preview center>
+  <Button variant="link" children="Link" />
+</Preview>
+  
+```tsx 
+export const Example = () => {
+  return <Button variant="link">Link</Button>;
+};
+```
+
+### Button colors
+
+The color of the button can be changed using the `color` prop.
+
+<Preview>
+  <div className="grid grid-cols-4 gap-4">
+    <div>
+      <Button color="blue" children="Blue" />
+    </div>
+    <div>
+      <Button color="red" children="Red" />
+    </div>
+    <div>
+      <Button color="violet" children="Violet" />
+    </div>
+    <div>
+      <Button color="green" children="Green" />
+    </div>
+    <div>
+      <Button color="yellow" children="Yellow" />
+    </div>
+    <div>
+      <Button color="zinc" children="Zinc" />
+    </div>
+    <div>
+      <Button color="black" children="Black" />
+    </div>
+  </div>
+</Preview>
+
+```tsx
+export const Example = () => {
+  return (
+    <>
+      <Button color="blue">Blue</Button>
+      <Button color="red">Red</Button>
+      <Button color="violet">Violet</Button>
+      <Button color="green">Green</Button>
+      <Button color="yellow">Yellow</Button>
+      <Button color="zinc">Zinc</Button>
+      <Button color="black">Black</Button>
+    </>
+  );
+};
+```
+
+### Button sizes
+
+The size of the button can be changed using the `size` prop.
+
+<Preview>
+  <div className="grid grid-cols-4 gap-4">
+    <div>
+      <Button size="xs" children="Extra small" />
+    </div>
+    <div>
+      <Button size="sm" children="Small" />
+    </div>
+    <div>
+      <Button size="md" children="Medium" />
+    </div>
+    <div>
+      <Button size="lg" children="Large" />
+    </div>
+    <div>
+      <Button size="xl" children="Extra large" />
+    </div>
+  </div>
+</Preview>
+  
+```tsx 
+export const Example = () => {
+  return (
+    <>
+      <Button size="xs">Extra small</Button>
+      <Button size="sm">Small</Button>
+      <Button size="md">Medium</Button>
+      <Button size="lg">Large</Button>
+      <Button size="xl">Extra large</Button>
+    </>
+  );
+};
+```
+
+### Button radius
+
+The border radius of the button can be changed using the `radius` prop.
+
+<Preview>
+  <div className="grid grid-cols-4 gap-4">
+    <div>
+      <Button radius="none" children="None" />
+    </div>
+    <div>
+      <Button radius="sm" children="Small" />
+    </div>
+    <div>
+      <Button radius="md" children="Medium" />
+    </div>
+    <div>
+      <Button radius="lg" children="Large" />
+    </div>
+    <div>
+      <Button radius="xl" children="XLarge" />
+    </div>
+    <div>
+      <Button radius="full" children="Full" />
+    </div>
+  </div>
+</Preview>
+  
+```tsx 
+export const Example = () => {
+  return (
+    <>
+      <Button radius="none">None</Button>
+      <Button radius="sm">Small</Button>
+      <Button radius="md">Medium</Button>
+      <Button radius="lg">Large</Button>
+      <Button radius="xl">XLarge</Button>
+      <Button radius="full">Full</Button>
+    </>
+  );
+};
+```
+
+### Square button
+
+The `square` prop is used to make the button look square. It is generally used when an icon is placed inside the button.
+
+<Preview center>
+  <Button square>
+    <FaReact size={20} />
+  </Button>
+</Preview>
+  
+```tsx 
+export const Example = () => {
+  return (
+    <Button square>
+      <FaReact size={20} />
+    </Button>
+  );
+};
+```
+
+### Truncate button
+
+The `truncate` prop is used to truncate the text inside the button. It prevents text overflow in buttons with a fixed width.
+
+<Preview center>
+  <Button className="w-20" truncate children="Truncate text" />
+</Preview>
+
+```tsx
+export const Example = () => {
+  return (
+    <Button className="w-20" truncate>
+      Truncate text
+    </Button>
+  );
+};
+```
+
+### Full width button
+
+The `fullWidth` prop is used to make the button full width.
+
+<Preview>
+  <div className="grid grid-cols-1 gap-4">
+    <div>
+      <Button fullWidth children="Full width" />
+    </div>
+    <div>
+      <Button children="Default content width" />
+    </div>
+  </div>
+</Preview>
+  
+```tsx 
+export const Example = () => {
+  return (
+    <>
+      <Button fullWidth>Full width</Button>
+      <Button>Default content width</Button>
+    </>
+  );
+};
+```
+
+### Loading button
+
+The `loading` prop is used to indicate that the button is in a loading state.
+In this case, the button cannot be clicked.
+
+<Preview center>
+  <Button loading children="Loading" />
+</Preview>
+
+```tsx
+export const Example = () => {
+  return <Button loading>Loading</Button>;
+};
+```
+
+### Custom component
+
+You can change the root element of the button with the `as` prop.
+The Button component will now be rendered as an anchor element and will receive the `href` and `target` props required for the anchor element.
+This applies to all components and props.
+
+**Anchor**
+
+<Preview center>
+  <Button
+    asChild
+    children={
+      <a href="#" target="_blank">
+        Link
+      </a>
+    }
+  />
+</Preview>
+
+```tsx
+export const Example = () => {
+  return (
+    <Button asChild>
+      <a href="#" target="_blank">
+        Link
+      </a>
+    </Button>
+  );
+};
+```
+
+**Next Link**
+
+You can use any component you want, not just `ElementType`.
+For example, when using with Next.js, you can use the `Link` component.
+It supports all props from the component you write here.
+
+<Preview center>
+  <Button
+    asChild
+    children={
+      <Link href="#" target="_blank">
+        Link
+      </Link>
+    }
+  />
+</Preview>
+
+```tsx
+import Link from "next/link";
+
+export const Example = () => {
+  return (
+    <Button asChild>
+      <Link href="#" target="_blank">
+        Link
+      </Link>
+    </Button>
+  );
+};
+```
+
+import { Fragment } from "react/jsx-runtime";

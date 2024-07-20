@@ -1,4 +1,6 @@
-import { cn } from "@piksel-ui/core";
+"use client";
+
+import { cn } from "@oguzhan-test/react-core";
 import React, { FC } from "react";
 
 export type PreviewProps = {
@@ -11,6 +13,7 @@ export const Preview: FC<PreviewProps> = (props) => {
 
   return (
     <div
+      tabIndex={-1}
       className={cn(
         "flex flex-col w-full px-4 md:px-10 py-10 border border-zinc-500/25 rounded-md my-4",
         center && "items-center justify-center"

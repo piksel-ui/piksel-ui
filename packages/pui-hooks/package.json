@@ -1,6 +1,6 @@
 {
-  "name": "@piksel-ui/hooks",
-  "version": "0.0.1",
+  "name": "@oguzhan-test/react-hooks",
+  "version": "0.0.5",
   "private": false,
   "license": "MIT",
   "main": "dist/index.js",
@@ -14,8 +14,8 @@
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
-    "@piksel-ui/eslint-config": "*",
-    "@piksel-ui/typescript-config": "*",
+    "@oguzhan-test/eslint-config": "*",
+    "@oguzhan-test/typescript-config": "*",
     "@turbo/gen": "^1.12.4",
     "@types/eslint": "^8.56.5",
     "@types/node": "^20.11.24",

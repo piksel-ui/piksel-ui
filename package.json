@@ -5,7 +5,7 @@
   "scripts": {
     "build": "turbo build --filter=./packages/pui-* --filter=docs",
     "dev": "turbo dev --filter=./packages/pui-* --filter=docs",
-    "clean": "turbo clean --filter=./packages/pui* --filter=docs && rm -rf node_modules",
+    "clean": "turbo clean --filter=./packages/pui-* --filter=docs && rm -rf node_modules",
     "typecheck": "turbo typecheck --filter=./packages/pui-* --filter=docs",
     "lint": "turbo lint --filter=./packages/pui-* --filter=docs",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
@@ -15,8 +15,9 @@
     "release": "turbo build --filter=./packages/pui-* && changeset publish"
   },
   "devDependencies": {
-    "@piksel-ui/eslint-config": "*",
-    "@piksel-ui/typescript-config": "*",
+    "@changesets/cli": "^2.27.3",
+    "@oguzhan-test/eslint-config": "*",
+    "@oguzhan-test/typescript-config": "*",
     "prettier": "^3.2.5",
     "turbo": "latest"
   },
@@ -31,5 +32,7 @@
     "apps/*",
     "packages/*"
   ],
-  "dependencies": {}
+  "dependencies": {
+    "react-icons": "^5.2.1"
+  }
 }

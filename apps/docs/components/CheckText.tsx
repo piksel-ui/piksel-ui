@@ -9,7 +9,7 @@ export const CheckText: FC<CheckTextProps> = () => {
       If you haven't included Piksel UI in your project, include it first. You
       can check the{" "}
       {
-        <Link href="/installation" blank>
+        <Link href="/docs/installation" blank>
           installation
         </Link>
       }{" "}

@@ -1,61 +1,148 @@
-import { PikselComponentProps, forwardRef, cs } from "@piksel-ui/core";
-import React, { ElementType, ForwardedRef, Fragment } from "react";
+"use client";
+
+import { cn, tv, VariantProps } from "@oguzhan-test/react-core";
+import { Slot, Slottable, SlotProps } from "@radix-ui/react-slot";
+import React, { ButtonHTMLAttributes, forwardRef, useCallback } from "react";
 import { Loader } from "../Loader";
 
-export type ButtonProps<T extends ElementType> = {
-  as?: T;
-  variant?: "solid" | "light" | "outline" | "ghost" | "link";
-  color?:
-    | "blue"
-    | "red"
-    | "violet"
-    | "green"
-    | "yellow"
-    | "zinc"
-    | "white"
-    | "black";
-  size?: "xs" | "sm" | "md" | "lg" | "xl";
-  radius?: "none" | "sm" | "md" | "lg" | "xl" | "full";
-  square?: boolean;
-  truncate?: boolean;
-  fullWidth?: boolean;
-  loading?: boolean;
-  children?: React.ReactNode;
-};
+/**
+ * Button component
+ */
+export type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> &
+  VariantProps<typeof button> &
+  SlotProps & {
+    /**
+     * If true, the button will be rendered as a child component
+     */
+    asChild?: boolean;
+    /**
+     * Left content of the button
+     */
+    left?: React.ReactNode;
+    /**
+     * Right content of the button
+     */
+    right?: React.ReactNode;
+    /**
+     * Loader component to be displayed while loading
+     */
+    loader?: React.ReactNode;
+    /**
+     * Position of the loader
+     */
+    loaderPosition?: "left" | "right";
+    /**
+     * Content to be displayed while loading.
+     * Works when loading=true and loaderPosition="full".
+     */
+    childrenWhenLoading?: SlotProps["children"];
+  };
 
-export const buttonStyle = cs({
+export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
+  (props, ref) => {
+    const {
+      asChild,
+      left,
+      right,
+      loader = <Loader />,
+      loaderPosition = "left",
+      childrenWhenLoading,
+      variant,
+      color,
+      size,
+      radius,
+      square,
+      truncate,
+      fullWidth,
+      loading,
+      className,
+      children,
+      ...rest
+    } = props;
+
+    const componentClassNames = button({
+      variant,
+      color,
+      size,
+      radius,
+      square,
+      truncate,
+      fullWidth,
+      loading,
+      className,
+    });
+
+    const LeftRenderer = useCallback(() => {
+      if (loading && loaderPosition === "left") {
+        return <span>{loader}</span>;
+      }
+      return left;
+    }, [loading, loaderPosition, loader, left]);
+    const RightRenderer = useCallback(() => {
+      if (loading && loaderPosition === "right") {
+        return <span>{loader}</span>;
+      }
+      return right;
+    }, [loading, loaderPosition, loader, right]);
+
+    const Component = asChild ? Slot : "button";
+
+    return (
+      <Component className={cn(componentClassNames)} {...rest} ref={ref}>
+        <LeftRenderer />
+        <Slottable>
+          {loading && childrenWhenLoading ? childrenWhenLoading : children}
+        </Slottable>
+        <RightRenderer />
+      </Component>
+    );
+  }
+);
+export const button = tv({
+  /**
+   * Base styles of the button
+   */
   base: [
-    "relative inline-flex items-center justify-center no-underline",
-    "font-medium outline-0 transition cursor-pointer select-none flex-shrink-0 max-w-full whitespace-nowrap",
+    "relative inline-flex items-center justify-center no-underline outline-0",
+    "font-medium ring-0 ring-offset-0 transition-all cursor-pointer select-none flex-shrink-0 max-w-full whitespace-nowrap overflow-hidden",
     "hover:bg-opacity-90",
+    "focus-visible:ring-2 focus-visible:ring-offset-2",
     "active:bg-opacity-100",
-    "focus-visible:ring-2 focus-visible:ring-offset-1 focus-visible:ring-offset-transparent",
-    "disabled:opacity-75 disabled:cursor-not-allowed disabled:pointer-events-none",
+    "disabled:opacity-75 disabled:cursor-not-allowed",
   ],
   variants: {
+    /**
+     * Variant prop of the button
+     */
     variant: {
-      solid: "",
-      light: "hover:bg-opacity-50",
-      outline: "outline-1 -outline-offset-1",
+      filled: "border",
+      soft: "hover:bg-opacity-50",
+      outline: "border focus-visible:ring-transparent",
       ghost: "active:bg-opacity-50",
       link: "underline-offset-4 hover:underline",
     },
+    /**
+     * Color prop of the button
+     */
     color: {
-      blue: "focus-visible:ring-blue-500",
-      red: "focus-visible:ring-red-500",
-      violet: "focus-visible:ring-violet-500",
-      green: "focus-visible:ring-green-500",
-      yellow: "focus-visible:ring-yellow-500",
-      zinc: "focus-visible:ring-zinc-500",
-      white: "focus-visible:ring-zinc-50",
-      black: "focus-visible:ring-zinc-950",
+      blue: "ring-blue-300 border-blue-600",
+      red: "ring-red-300 border-red-600",
+      violet: "ring-violet-300 border-violet-600",
+      green: "ring-green-300 border-green-600",
+      yellow: "ring-yellow-200 border-yellow-500",
+      zinc: "ring-zinc-300 border-zinc-600",
+      white: "ring-zinc-50 border-zinc-50",
+      black: "ring-zinc-400 border-zinc-950",
     },
+    /**
+     * Size prop of the button
+     */
     size: {
-      xs: "px-2 text-xs h-8 gap-0.5",
-      sm: "px-3 text-sm h-9 gap-1",
-      md: "px-4 text-base h-10 gap-1.5",
-      lg: "px-5 text-lg h-11 gap-2",
-      xl: "px-5 text-xl h-12 gap-2.5",
+      xs: "px-2 text-xs h-8 gap-1",
+      sm: "px-3 text-sm h-9 gap-1.5",
+      md: "px-4 text-md h-10 gap-2",
+      lg: "px-5 text-lg h-11 gap-2.5",
+      xl: "px-5 text-xl h-12 gap-3",
     },
     radius: {
       none: "rounded-none",
@@ -66,7 +153,7 @@ export const buttonStyle = cs({
       full: "rounded-full",
     },
     square: {
-      true: "aspect-square px-0",
+      true: "px-0",
     },
     truncate: {
       true: "truncate line-clamp-1",
@@ -75,98 +162,99 @@ export const buttonStyle = cs({
       true: "flex w-full",
     },
     loading: {
-      true: "cursor-not-allowed",
+      true: "",
     },
   },
+
   compoundVariants: [
     /* -------------------------------------------------------------------------- */
-    /*                                Solid variant                               */
+    /*                             Variants and colors                            */
+    /* -------------------------------------------------------------------------- */
+    /* -------------------------------------------------------------------------- */
+    /*                               Filled variant                               */
     /* -------------------------------------------------------------------------- */
     {
-      variant: "solid",
+      variant: "filled",
       color: "blue",
       className: "bg-blue-500 text-white hover:text-white",
     },
     {
-      variant: "solid",
+      variant: "filled",
       color: "red",
       className: "bg-red-500 text-white hover:text-white",
     },
     {
-      variant: "solid",
+      variant: "filled",
       color: "violet",
       className: "bg-violet-500 text-white hover:text-white",
     },
     {
-      variant: "solid",
+      variant: "filled",
       color: "green",
       className: "bg-green-500 text-white hover:text-white",
     },
     {
-      variant: "solid",
+      variant: "filled",
       color: "yellow",
-      className: "bg-yellow-500 text-black hover:text-black",
+      className: "bg-yellow-400 text-black hover:text-black",
     },
     {
-      variant: "solid",
+      variant: "filled",
       color: "zinc",
       className: "bg-zinc-500 text-white hover:text-white",
     },
     {
-      variant: "solid",
+      variant: "filled",
       color: "white",
       className: "bg-zinc-50 text-zinc-950 hover:text-zinc-950",
     },
     {
-      variant: "solid",
+      variant: "filled",
       color: "black",
       className: "bg-zinc-950 text-white hover:text-white",
     },
     /* -------------------------------------------------------------------------- */
-    /*                                Light variant                               */
+    /*                                Soft variant                                */
     /* -------------------------------------------------------------------------- */
     {
-      variant: "light",
+      variant: "soft",
       color: "blue",
       className: "bg-blue-100 text-blue-600 hover:text-blue-600",
     },
     {
-      variant: "light",
+      variant: "soft",
       color: "red",
       className: "bg-red-100 text-red-600 hover:text-red-600",
     },
     {
-      variant: "light",
+      variant: "soft",
       color: "violet",
       className: "bg-violet-100 text-violet-600 hover:text-violet-600",
     },
     {
-      variant: "light",
+      variant: "soft",
       color: "green",
       className: "bg-green-100 text-green-600 hover:text-green-600",
     },
     {
-      variant: "light",
+      variant: "soft",
       color: "yellow",
       className: "bg-yellow-100 text-yellow-600 hover:text-yellow-600",
     },
     {
-      variant: "light",
+      variant: "soft",
       color: "zinc",
       className: "bg-zinc-100 text-zinc-600 hover:text-zinc-600",
     },
     {
-      variant: "light",
+      variant: "soft",
       color: "white",
       className: "bg-white text-zinc-950 hover:text-zinc-950",
     },
     {
-      variant: "light",
+      variant: "soft",
       color: "black",
-      className: [
-        "text-white bg-zinc-950",
-        "hover:text-white hover:bg-opacity-90",
-      ],
+      className: "bg-zinc-200 text-zinc-600",
     },
     /* -------------------------------------------------------------------------- */
     /*                               Outline variant                              */
@@ -177,6 +265,7 @@ export const buttonStyle = cs({
       className: [
         "text-blue-500 outline-blue-500",
         "hover:bg-blue-500 hover:text-white",
+        "focus-visible:ring-offset-blue-300",
       ],
     },
     {
@@ -185,6 +274,7 @@ export const buttonStyle = cs({
       className: [
         "text-red-500 outline-red-500",
         "hover:bg-red-500 hover:text-white",
+        "focus-visible:ring-offset-red-300",
       ],
     },
     {
@@ -193,6 +283,7 @@ export const buttonStyle = cs({
       className: [
         "text-violet-500 outline-violet-500",
         "hover:bg-violet-500 hover:text-white",
+        "focus-visible:ring-offset-violet-300",
       ],
     },
     {
@@ -201,38 +292,43 @@ export const buttonStyle = cs({
       className: [
         "text-green-500 outline-green-500",
         "hover:bg-green-500 hover:text-white",
+        "focus-visible:ring-offset-green-300",
       ],
     },
     {
       variant: "outline",
       color: "yellow",
       className: [
-        "text-yellow-500 outline-yellow-500",
+        "text-yellow-600",
         "hover:bg-yellow-500 hover:text-black",
+        "focus-visible:ring-offset-yellow-300",
       ],
     },
     {
       variant: "outline",
       color: "zinc",
       className: [
-        "text-zinc-500 outline-zinc-500",
+        "text-zinc-500",
         "hover:bg-zinc-500 hover:text-white",
+        "focus-visible:ring-offset-zinc-300",
       ],
     },
     {
       variant: "outline",
       color: "white",
       className: [
-        "text-zinc-500 outline-zinc-500",
+        "text-zinc-500",
         "hover:bg-zinc-500 hover:text-white",
+        "focus-visible:ring-offset-zinc-300",
       ],
     },
     {
       variant: "outline",
       color: "black",
       className: [
-        "text-zinc-950 outline-zinc-950",
+        "text-zinc-950",
         "hover:bg-zinc-950 hover:text-white",
+        "focus-visible:ring-offset-zinc-400",
       ],
     },
     /* -------------------------------------------------------------------------- */
@@ -241,32 +337,32 @@ export const buttonStyle = cs({
     {
       variant: "ghost",
       color: "blue",
-      className: "text-blue-500 hover:bg-blue-50 hover:text-blue-500",
+      className: "text-blue-500 hover:bg-blue-100 hover:text-blue-500",
     },
     {
       variant: "ghost",
       color: "red",
-      className: "text-red-500 hover:bg-red-50 hover:text-red-500",
+      className: "text-red-500 hover:bg-red-100 hover:text-red-500",
     },
     {
       variant: "ghost",
       color: "violet",
-      className: "text-violet-500 hover:bg-violet-50 hover:text-violet-500",
+      className: "text-violet-500 hover:bg-violet-100 hover:text-violet-500",
     },
     {
       variant: "ghost",
       color: "green",
-      className: "text-green-500 hover:bg-green-50 hover:text-green-500",
+      className: "text-green-500 hover:bg-green-100 hover:text-green-500",
     },
     {
       variant: "ghost",
       color: "yellow",
-      className: "text-yellow-500 hover:bg-yellow-50 hover:text-yellow-500",
+      className: "text-yellow-500 hover:bg-yellow-100 hover:text-yellow-500",
     },
     {
       variant: "ghost",
       color: "zinc",
-      className: "text-zinc-500 hover:bg-zinc-50 hover:text-zinc-500",
+      className: "text-zinc-500 hover:bg-zinc-100 hover:text-zinc-500",
     },
     {
       variant: "ghost",
@@ -276,7 +372,7 @@ export const buttonStyle = cs({
     {
       variant: "ghost",
       color: "black",
-      className: "text-zinc-950 hover:bg-zinc-950 hover:text-zinc-50",
+      className: "text-zinc-600 hover:bg-zinc-100",
     },
     /* -------------------------------------------------------------------------- */
     /*                                Link variant                                */
@@ -321,64 +417,39 @@ export const buttonStyle = cs({
       color: "black",
       className: "text-zinc-950 hover:text-zinc-950",
     },
+    /* -------------------------------------------------------------------------- */
+    /*                              Square and sizes                              */
+    /* -------------------------------------------------------------------------- */
+    {
+      square: true,
+      size: "xs",
+      className: "size-8",
+    },
+    {
+      square: true,
+      size: "sm",
+      className: "size-9",
+    },
+    {
+      square: true,
+      size: "md",
+      className: "size-10",
+    },
+    {
+      square: true,
+      size: "lg",
+      className: "size-11",
+    },
+    {
+      square: true,
+      size: "xl",
+      className: "size-12",
+    },
   ],
   defaultVariants: {
-    variant: "solid",
+    variant: "filled",
     color: "blue",
     size: "md",
     radius: "md",
   },
 });
-
-export const Button = forwardRef(
-  <T extends ElementType = "button">(
-    props: PikselComponentProps<T, ButtonProps<T>>,
-    ref: ForwardedRef<any>
-  ) => {
-    const {
-      as: Component = "button",
-      variant = "solid",
-      color = "blue",
-      size = "md",
-      radius = "md",
-      square = false,
-      truncate = false,
-      fullWidth = false,
-      loading = false,
-      className,
-      children,
-      ...rest
-    } = props;
-
-    const style = buttonStyle({
-      variant,
-      color,
-      size,
-      radius,
-      square,
-      truncate,
-      fullWidth,
-      loading,
-      className,
-    });
-    return (
-      <Component
-        className={style}
-        {...rest}
-        onClick={loading ? undefined : rest.onClick}
-        ref={ref}
-      >
-        {loading ? (
-          <Fragment>
-            <span className="invisible">{children}</span>
-            <span className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-              <Loader size="1.25em" />
-            </span>
-          </Fragment>
-        ) : (
-          children
-        )}
-      </Component>
-    );
-  }
-);
